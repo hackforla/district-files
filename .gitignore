@@ -1,8 +1,14 @@
 myenv/
 __pycache__/
 .vscode/
-# Ignore service account JSON keys
-*.json
+# Python venv
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+.env
 # Ignore NTFS zone identifiers
 *:*Zone.Identifier*
 token.json
