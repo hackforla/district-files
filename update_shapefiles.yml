@@ -1,10 +1,13 @@
+# Hack for LA District Files Project
+# Author: Aletia Trepte (GitHub: parcheesime)
+# License: MIT – free to use, adapt, and share.
 
 name: Update Shapefiles
 
-on:
-  schedule:
-    - cron: "0 0 1 * *"  # Runs once a month on the 1st at midnight UTC
-  workflow_dispatch:     # Allow manual runs
+# on:
+#   schedule:
+#     - cron: "0 0 1 * *"  # Runs once a month on the 1st at midnight UTC
+#   workflow_dispatch:     # Allow manual runs
 
 jobs:
   update-shapefiles:
