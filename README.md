@@ -1,6 +1,5 @@
 # GeoHub LA Data Collection
-> **Note:** This repository has moved.  
-> The active version is now at: [https://github.com/parcheesime/geohub-datacollection](https://github.com/parcheesime/geohub-datacollection)
+> **Note:** This repository is an off-shoot of the following repository: [https://github.com/parcheesime/geohub-datacollection](https://github.com/parcheesime/geohub-datacollection).
 
 
 ## Overview
