@@ -1,6 +1,5 @@
 # GeoHub LA Data Collection
-> **Note:** This repository is an off-shoot of the following repository: [https://github.com/parcheesime/geohub-datacollection](https://github.com/parcheesime/geohub-datacollection).
-
+> **Note:** This repository is an off-shoot of the following repository: [https://github.com/parcheesime/geohub-datacollection](https://github.com/parcheesime/geohub-datacollection). It is issue [118 Create District Types](https://github.com/hackforla/data-science/issues/118#issuecomment-3276775698) for Hack for L.A. Data Science CoP.
 
 ## Overview
 This project collects **district boundary files** for various political and administrative districts within Los Angeles County.  
