@@ -1,0 +1,8 @@
+run_id,timestamp,district,url,status_code,schema_ok,record_count,file_size_kb,result,error,file_written,elapsed_sec
+20251001033127,2025-10-01T03:31:29.172180,assembly,https://maps.lacity.org/lahub/rest/services/Boundaries/MapServer/2/query?where=1%3D1&outFields=*&outSR=4326&f=json,200,True,13,1960.63,success,,True,1.34
+20251001033127,2025-10-01T03:31:30.485741,bids_city_clerk,https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/Business_Improvement_Districts/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json,200,True,42,1190.6,success,,True,1.31
+20251001033127,2025-10-01T03:31:31.760305,city_council,https://maps.lacity.org/lahub/rest/services/Boundaries/MapServer/13/query?where=1%3D1&outFields=*&outSR=4326&f=json,200,True,15,3104.91,success,,True,1.27
+20251001033127,2025-10-01T03:31:33.712867,congressional,https://arcgis.gis.lacounty.gov/arcgis/rest/services/LACounty_Dynamic/Political_Boundaries/MapServer/2/query?where=1%3D1&outFields=*&outSR=4326&f=json,200,True,18,6703.76,success,,True,1.95
+20251001033127,2025-10-01T03:31:34.989320,neighborhood_council,https://services5.arcgis.com/7nsPwEMP38bSkCjy/arcgis/rest/services/Neighborhood_Council_Boundaries_(2018)/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json,200,True,99,1009.81,success,,True,1.28
+20251001033127,2025-10-01T03:31:35.943095,senate,https://maps.lacity.org/lahub/rest/services/Boundaries/MapServer/23/query?where=1%3D1&outFields=*&outSR=4326&f=json,200,True,6,1704.57,success,,True,0.95
+20251001033127,2025-10-01T03:31:36.616732,supervisors,https://maps.lacity.org/lahub/rest/services/Boundaries/MapServer/4/query?where=1%3D1&outFields=*&outSR=4326&f=json,200,True,5,1199.21,success,,True,0.67
