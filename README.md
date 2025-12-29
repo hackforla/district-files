@@ -37,13 +37,21 @@ The data collection process is facilitated using the [GeoHub LA County Website](
 
 ## Repository Structure
 
+```text
 geohubLA_data_collection/
+
 │
+
 ├── main.py # Script to fetch and save district shapefiles
+
 ├── shapefiles_output/ # Folder where JSON and GeoJSON outputs are stored
+
 ├── example_usage.ipynb # Jupyter notebook demo of loading and plotting data
+
 ├── requirements.txt # Python dependencies
+
 └── README.md # Project documentation
+```
 
 
 ---
