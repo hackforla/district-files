@@ -22,9 +22,12 @@ from drive_utils import drive_operations
 OUTPUT_DIR = "shapefiles_output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Google Drive Shared Folder ID
-DRIVE_FOLDER_ID = "1vn4Jn41pyD6FlhNPncn3iBFW8gUFxcni"
-DRIVE_LOG_FOLDER_ID = "1N6_3UC7y58QijWdSaBkF45zT6E1XBmQl"
+# Google Drive Shared Folder IDs (from env)
+DRIVE_FOLDER_ID = os.getenv("DRIVE_FOLDER_ID")
+DRIVE_LOG_FOLDER_ID = os.getenv("DRIVE_LOG_FOLDER_ID")
+
+if not DRIVE_FOLDER_ID or not DRIVE_LOG_FOLDER_ID:
+    raise RuntimeError("Missing required Google Drive folder IDs")
 
 # District API endpoints (ArcGIS REST services)
 API_URLS = {

@@ -3,26 +3,34 @@ name: L.A. Districts Shapefile Workflow
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 4 1 * *" # Monthly at 04:15 UTC to avoid high load
+    - cron: "15 4 1 * *" # Monthly at 04:15 UTC
+
+permissions:
+  contents: read
 
 jobs:
   download_shapefiles:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.10.6' 
+          python-version: "3.10"
+          cache: "pip"
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt 
-      - name: Decode JSON configuration for token.json
+          pip install -r requirements.txt
+
+      - name: Decode service account JSON
         run: echo "${{ secrets.ENCODED_JSON }}" | base64 --decode > ./drive_utils/token.json
-        env:
-          ENCODED_JSON: ${{ secrets.ENCODED_JSON }}
+
       - name: Run main.py
         run: python main.py
         env:
-          FOLDER_ID: ${{ secrets.FOLDER_ID }}
+          DRIVE_FOLDER_ID: ${{ vars.DRIVE_FOLDER_ID }}
+          DRIVE_LOG_FOLDER_ID: ${{ vars.DRIVE_LOG_FOLDER_ID }}
