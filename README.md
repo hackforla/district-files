@@ -6,6 +6,8 @@ This project collects **district boundary files** for various political and admi
 The data is converted into both **raw JSON** and **GeoJSON** formats for easy use in civic tech projects.  
 The processed data will be contributed to **Hack for LA**.
 
+The processed outputs are automatically uploaded to a shared Google Drive, making the latest district files easily accessible for civic-tech and data-science use.
+
 For questions or collaboration, reach out on GitHub: [@parcheesime](https://github.com/parcheesime).
 
 ---
@@ -30,8 +32,9 @@ The data collection process is facilitated using the [GeoHub LA County Website](
 3. **Data Processing**: Responses are saved in two formats:
    - Raw ArcGIS JSON (`district.json`)
    - GeoJSON (`district.geojson`)
-4. **Data Storage**: Output files are stored in `shapefiles_output/`.  
-5. **Automation**: A GitHub Actions workflow will be configured to run this process on a weekly or monthly basis via update_shapefiles.yml.
+4. **Data Storage**: Output files can be locally stored in `shapefiles_output/`.  
+5. **Automation**: A GitHub Actions workflow will be configured to run this process on a weekly or monthly basis via main.yml.
+6. **Data Upload**: Output files are automatically uploaded to a shared Google Drive, making the latest district files easily accessible for civic-tech and data-science use.
 
 ---
 
@@ -44,7 +47,9 @@ geohubLA_data_collection/
 
 ├── main.py # Script to fetch and save district shapefiles
 
-├── shapefiles_output/ # Folder where JSON and GeoJSON outputs are stored
+├── main.yml # GitHub Actions workflow file saves shapefiles in drive
+
+├── shapefiles_output/ # Folder where JSON and GeoJSON outputs are stored locally
 
 ├── example_usage.ipynb # Jupyter notebook demo of loading and plotting data
 
