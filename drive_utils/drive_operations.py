@@ -105,6 +105,7 @@ def upload_file_to_drive(folder_id, file_path, file_name):
     # checking if files need updating
     
     # prepare the file metadata and the media upload object
+    # prepare the file metadata and the media upload object
     file_metadata = {'name': file_name, 'parents': [folder_id]}
     media = MediaFileUpload(file_path, mimetype='application/octet-stream', resumable=True)
 
@@ -120,11 +121,13 @@ def upload_file_to_drive(folder_id, file_path, file_name):
     if existing_files:
         # if file exists, update it
         file_id = existing_files[0]['id']
+        # For updates, we cannot include 'parents' field
+        update_metadata = {'name': file_name}
         try:
             # Update the existing file with the new content
             file = service.files().update(
                 fileId=file_id, 
-                body=file_metadata, 
+                body=update_metadata, 
                 media_body=media, 
                 fields='id',
                 supportsAllDrives=True

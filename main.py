@@ -23,8 +23,8 @@ OUTPUT_DIR = "shapefiles_output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Google Drive Shared Folder IDs (from env)
-DRIVE_FOLDER_ID = os.getenv("DRIVE_FOLDER_ID")
-DRIVE_LOG_FOLDER_ID = os.getenv("DRIVE_LOG_FOLDER_ID")
+DRIVE_FOLDER_ID = os.getenv("DRIVE_FOLDER_ID", "").strip()
+DRIVE_LOG_FOLDER_ID = os.getenv("DRIVE_LOG_FOLDER_ID", "").strip()
 
 if not DRIVE_FOLDER_ID or not DRIVE_LOG_FOLDER_ID:
     raise RuntimeError("Missing required Google Drive folder IDs")
