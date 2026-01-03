@@ -12,6 +12,7 @@ import geopandas as gpd
 from shapely.geometry import shape
 import geopandas as gpd
 from io import StringIO
+from drive_utils import drive_operations
 
 # -------------------------------
 # Configuration
@@ -20,6 +21,10 @@ from io import StringIO
 # Output directory
 OUTPUT_DIR = "shapefiles_output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# Google Drive Shared Folder ID
+DRIVE_FOLDER_ID = "1vn4Jn41pyD6FlhNPncn3iBFW8gUFxcni"
+DRIVE_LOG_FOLDER_ID = "1N6_3UC7y58QijWdSaBkF45zT6E1XBmQl"
 
 # District API endpoints (ArcGIS REST services)
 API_URLS = {
@@ -50,7 +55,7 @@ def save_as_json(data: dict, filepath: str) -> None:
 def save_as_geojson(data: dict, filepath: str) -> None:
     """Convert ArcGIS JSON to GeoJSON using GeoPandas."""
     if "features" not in data:
-        print(f"⚠️ No features found in data for {filepath}")
+        print(f"[WARN] No features found in data for {filepath}")
         return
 
     # ArcGIS REST JSON can be read directly with GeoPandas if you stringify it
@@ -58,7 +63,7 @@ def save_as_geojson(data: dict, filepath: str) -> None:
         gdf = gpd.read_file(StringIO(json.dumps(data)))
         gdf.to_file(filepath, driver="GeoJSON")
     except Exception as e:
-        print(f"❌ Failed to convert to GeoJSON for {filepath}: {e}")
+        print(f"[ERROR] Failed to convert to GeoJSON for {filepath}: {e}")
 
 # -------------------------------
 # Main Execution
@@ -101,12 +106,17 @@ def main():
             file_written = True
             result = "success"
 
-            print(f"✅ Saved JSON: {json_path}")
-            print(f"✅ Saved GeoJSON: {geojson_path}")
+            print(f"[OK] Saved JSON: {json_path}")
+            print(f"[OK] Saved GeoJSON: {geojson_path}")
+
+            # Upload to Google Drive
+            print(f"[UPLOAD] Uploading {district} files to Google Drive...")
+            drive_operations.upload_file_to_drive(DRIVE_FOLDER_ID, json_path, f"{district}.json")
+            drive_operations.upload_file_to_drive(DRIVE_FOLDER_ID, geojson_path, f"{district}.geojson")
 
         except Exception as e:
             error = str(e)
-            print(f"❌ Error processing {district}: {error}")
+            print(f"[ERROR] Error processing {district}: {error}")
 
         elapsed = round(time.time() - start, 2)
 
@@ -126,6 +136,17 @@ def main():
             "elapsed_sec": elapsed,
         }
         log_run(entry)
+
+    # Upload Log File
+    try:
+        log_path = os.path.join("logs", "run_log.csv")
+        if os.path.exists(log_path):
+             print(f"[UPLOAD] Uploading run_log.csv to Google Drive...")
+             drive_operations.upload_file_to_drive(DRIVE_LOG_FOLDER_ID, log_path, "run_log.csv")
+        else:
+             print(f"[WARN] Log file not found at {log_path}, skipping upload.")
+    except Exception as e:
+        print(f"[ERROR] Failed to upload log file: {e}")
 
 
 if __name__ == "__main__":

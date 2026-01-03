@@ -8,12 +8,21 @@ def minimal_drive_test():
     from google.oauth2 import service_account
     from googleapiclient.discovery import build
 
+    # Get the directory of the current script
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    token_path = os.path.join(dir_path, 'token.json')
+
     creds = service_account.Credentials.from_service_account_file(
-        'token.json', 
+        token_path, 
         scopes=['https://www.googleapis.com/auth/drive'])
 
     service = build('drive', 'v3', credentials=creds)
-    results = service.files().list(pageSize=10, fields="files(id, name)").execute()
+    results = service.files().list(
+        pageSize=10, 
+        fields="files(id, name)",
+        supportsAllDrives=True, 
+        includeItemsFromAllDrives=True
+    ).execute()
     for file in results.get('files', []):
         print(f"Found file: {file.get('name')} with ID: {file.get('id')}")
 
@@ -34,7 +43,13 @@ def list_contents_of_folder(folder_id):
 
     # List files in the specified folder
     query = f"'{folder_id}' in parents"
-    results = service.files().list(q=query, pageSize=10, fields="files(id, name)").execute()
+    results = service.files().list(
+        q=query, 
+        pageSize=10, 
+        fields="files(id, name)",
+        supportsAllDrives=True, 
+        includeItemsFromAllDrives=True
+    ).execute()
     files = results.get('files', [])
     
     if files:
@@ -53,7 +68,12 @@ def create_or_find_subfolder(parent_folder_id, subfolder_name):
 
     # Check if the subfolder exists
     query = f"name = '{subfolder_name}' and '{parent_folder_id}' in parents and mimeType = 'application/vnd.google-apps.folder'"
-    results = service.files().list(q=query, fields="files(id, name)").execute()
+    results = service.files().list(
+        q=query, 
+        fields="files(id, name)",
+        supportsAllDrives=True, 
+        includeItemsFromAllDrives=True
+    ).execute()
     folders = results.get('files', [])
 
     if folders:
@@ -66,7 +86,11 @@ def create_or_find_subfolder(parent_folder_id, subfolder_name):
             'mimeType': 'application/vnd.google-apps.folder',
             'parents': [parent_folder_id]
         }
-        folder = service.files().create(body=file_metadata, fields='id').execute()
+        folder = service.files().create(
+            body=file_metadata, 
+            fields='id',
+            supportsAllDrives=True
+        ).execute()
         print(f"Created folder: {subfolder_name} with ID: {folder.get('id')}")
         return folder.get('id')
 
@@ -86,14 +110,25 @@ def upload_file_to_drive(folder_id, file_path, file_name):
 
     # check if a file with the same name exists in the folder
     query = f"name = '{file_name}' and '{folder_id}' in parents and trashed = false"
-    existing_files = service.files().list(q=query, fields='files(id)').execute().get('files', [])
+    existing_files = service.files().list(
+        q=query, 
+        fields='files(id)',
+        supportsAllDrives=True, 
+        includeItemsFromAllDrives=True
+    ).execute().get('files', [])
 
     if existing_files:
         # if file exists, update it
         file_id = existing_files[0]['id']
         try:
             # Update the existing file with the new content
-            file = service.files().update(fileId=file_id, body=file_metadata, media_body=media, fields='id').execute()
+            file = service.files().update(
+                fileId=file_id, 
+                body=file_metadata, 
+                media_body=media, 
+                fields='id',
+                supportsAllDrives=True
+            ).execute()
             print(f"Updated file with ID: {file.get('id')}")
         except Exception as e:
             print(f"Failed to update {file_name}: {e}")
@@ -101,7 +136,12 @@ def upload_file_to_drive(folder_id, file_path, file_name):
     else:
         # no existing file, upload as new
         try:
-            file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+            file = service.files().create(
+                body=file_metadata, 
+                media_body=media, 
+                fields='id',
+                supportsAllDrives=True
+            ).execute()
             print(f"Uploaded new file with ID: {file.get('id')}")
             return file.get('id')
         except Exception as e:
@@ -127,7 +167,12 @@ def list_files_in_folder(folder_id):
     """List all files in a specific folder."""
     creds = get_credentials()
     service = build('drive', 'v3', credentials=creds)
-    results = service.files().list(q=f"'{folder_id}' in parents and trashed = false", fields="files(id, name)").execute()
+    results = service.files().list(
+        q=f"'{folder_id}' in parents and trashed = false", 
+        fields="files(id, name)",
+        supportsAllDrives=True, 
+        includeItemsFromAllDrives=True
+    ).execute()
     files = results.get('files', [])
     return files
 
@@ -148,7 +193,12 @@ def get_folder_size(folder_id):
     service = build('drive', 'v3', credentials=creds)
     
     total_size = 0
-    results = service.files().list(q=f"'{folder_id}' in parents and trashed = false", fields="files(id, size)").execute()
+    results = service.files().list(
+        q=f"'{folder_id}' in parents and trashed = false", 
+        fields="files(id, size)",
+        supportsAllDrives=True, 
+        includeItemsFromAllDrives=True
+    ).execute()
     files = results.get('files', [])
     for file in files:
         total_size += int(file.get('size', 0))
