@@ -3,7 +3,7 @@ name: L.A. Districts Shapefile Workflow
 on:
   workflow_dispatch:
   schedule:
-     - cron: '0 8 * * *' # Every other month
+    - cron: "15 4 1 * *" # Monthly at 04:15 UTC to avoid high load
 
 jobs:
   download_shapefiles:
