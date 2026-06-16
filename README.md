@@ -10,6 +10,10 @@ The processed outputs are automatically uploaded to a shared Google Drive, makin
 
 For questions or collaboration, reach out on GitHub: [@parcheesime](https://github.com/parcheesime).
 
+### Scheduled workflow note
+
+This workflow runs monthly using GitHub Actions. GitHub may automatically disable scheduled workflows in public repositories after a period of repository inactivity. If shapefile updates stop appearing in Google Drive, check whether the workflow has been disabled and re-enable it from the Actions tab.
+
 ---
 
 ## Districts Covered
