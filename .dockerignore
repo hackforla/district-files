@@ -1,0 +1,15 @@
+.git
+.github
+__pycache__/
+*.py[cod]
+
+.venv/
+venv/
+myenv/
+
+.env
+drive_utils/token.json
+
+*.ipynb_checkpoints
+.DS_Store
+Thumbs.db
